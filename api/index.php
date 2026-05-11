@@ -12,10 +12,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-$apiBase = rtrim(raan_env('RAAAN_API_BASE', 'https://api.pixxxry.eu.cc'), '/');
+$apiBase = rtrim(
+    raan_env('RAAAN_API_BASE', 'https://api.pixxxry.eu.cc'),
+    '/'
+);
+
 $timeout = (int) raan_env('RAAAN_TIMEOUT_SECONDS', 25);
 
-$tool = strtolower(trim((string)($_GET['tool'] ?? $_POST['tool'] ?? '')));
+$tool = strtolower(
+    trim((string)($_GET['tool'] ?? $_POST['tool'] ?? ''))
+);
 
 $routes = [
     'tiktok' => '/download/tiktok',
@@ -44,7 +50,13 @@ $routes = [
 function raan_json($data, int $code = 200): void
 {
     http_response_code($code);
-    echo json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+    echo json_encode(
+        $data,
+        JSON_UNESCAPED_SLASHES |
+        JSON_UNESCAPED_UNICODE
+    );
+
     exit;
 }
 
@@ -52,8 +64,7 @@ if ($tool === '') {
     raan_json([
         'status' => true,
         'name' => 'RaaanTools API',
-        'message' => 'API gateway is running.',
-        'usage' => 'Use the RaaanTools interface to access tools.'
+        'message' => 'API gateway is running.'
     ]);
 }
 
@@ -65,10 +76,22 @@ if (!isset($routes[$tool])) {
 }
 
 $params = $_GET;
-unset($params['tool'], $params['action'], $params['raan_token']);
+
+unset(
+    $params['tool'],
+    $params['action'],
+    $params['raan_token']
+);
 
 foreach ($_POST as $key => $value) {
-    if (!isset($params[$key]) && !in_array($key, ['tool', 'action', 'raan_token'], true)) {
+    if (
+        !isset($params[$key]) &&
+        !in_array(
+            $key,
+            ['tool', 'action', 'raan_token'],
+            true
+        )
+    ) {
         $params[$key] = $value;
     }
 }
@@ -76,11 +99,15 @@ foreach ($_POST as $key => $value) {
 if (empty($params)) {
     raan_json([
         'status' => false,
-        'message' => 'Parameter request kosong.'
+        'message' => 'Parameter kosong.'
     ], 400);
 }
 
-$target = $apiBase . $routes[$tool] . '?' . http_build_query($params);
+$target =
+    $apiBase .
+    $routes[$tool] .
+    '?' .
+    http_build_query($params);
 
 $ch = curl_init($target);
 
@@ -96,23 +123,31 @@ curl_setopt_array($ch, [
 ]);
 
 $response = curl_exec($ch);
+
 $error = curl_error($ch);
+
 $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-$contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+
+$contentType = curl_getinfo(
+    $ch,
+    CURLINFO_CONTENT_TYPE
+);
+
 curl_close($ch);
 
 if ($response === false || $response === '') {
     raan_json([
         'status' => false,
-        'message' => 'Gateway gagal menghubungi layanan.',
-        'tool' => $tool
+        'message' => 'Gateway gagal.',
+        'tool' => $tool,
+        'error' => $error
     ], 502);
 }
 
 if ($code >= 400) {
     raan_json([
         'status' => false,
-        'message' => 'Layanan sedang tidak tersedia atau parameter tidak valid.',
+        'message' => 'Service error.',
         'tool' => $tool,
         'code' => $code
     ], 200);
@@ -123,4 +158,5 @@ if ($contentType) {
 }
 
 http_response_code(200);
+
 echo $response;

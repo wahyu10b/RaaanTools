@@ -1,34 +1,29 @@
 # RaaanTools
 
-RaaanTools adalah web tools berbasis PHP untuk generator, downloader, dan utilitas ringan dengan sistem proxy API server-side.
+RaaanTools adalah web tools berbasis PHP untuk downloader, generator, dan utilitas modern.
 
-## Fitur
+## Features
 
-- PHP router untuk Vercel.
-- Proxy API server-side agar endpoint utama tidak ditulis langsung di frontend.
-- Struktur halaman modular: generator, downloader, dan tools.
-- UI responsive untuk penggunaan mobile.
-- Siap deploy ke Vercel lewat GitHub auto deployment.
+- PHP API Gateway
+- Proxy API server-side
+- Responsive mobile UI
+- GitHub + Vercel auto deploy
+- Secure endpoint routing
+- Hidden external API endpoint
 
-## Struktur Project
+## Stack
 
-```txt
-.
-├─ index.php
-├─ vercel.json
-├─ api/
-│  ├─ app.php
-│  └─ index.php
-├─ includes/
-│  └─ env.php
-├─ config/
-│  └─ tools.js
-├─ menu/
-│  ├─ downloader/
-│  ├─ generator/
-│  └─ tools/
-├─ asset/
-├─ css/
-├─ script/
-└─ handle/
+- PHP 8
+- JavaScript
+- Vercel
+- GitHub
+- Termux
 
+## Deployment
+
+Push ke branch main otomatis deploy ke Vercel.
+
+## Security
+
+External API tidak ditampilkan langsung di frontend.
+Frontend hanya menggunakan internal gateway /api.
