@@ -1,0 +1,2 @@
+/api/*  /api.php  200
+/*      /handle/404.php  404

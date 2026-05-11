@@ -1,0 +1,3 @@
+/* CSS khusus YouTube MP4 */
+:root {--tool-accent:#ff0033;}
+.tab-btn.active,.menu-cat-tab.active,.tool-item.active,.tool-item-desktop.active{background:var(--yellow-active);}
