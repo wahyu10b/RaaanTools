@@ -15,8 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 $apiBase = rtrim(raan_env('RAAAN_API_BASE', 'https://api.pixxxry.eu.cc'), '/');
 $timeout = (int) raan_env('RAAAN_TIMEOUT_SECONDS', 25);
 
-$tool = $_GET['tool'] ?? $_POST['tool'] ?? '';
-$tool = strtolower(trim($tool));
+$tool = strtolower(trim((string)($_GET['tool'] ?? $_POST['tool'] ?? '')));
 
 $routes = [
     'tiktok' => '/download/tiktok',
@@ -34,36 +33,34 @@ $routes = [
     'lahelu' => '/download/lahelu',
     'ytmp3' => '/download/ytmp3',
     'ytmp4' => '/download/ytmp4',
-    'brat' => '/maker/brat',
-    'bratvid' => '/maker/bratvid',
+    'brat' => '/sticker/brat',
+    'bratvid' => '/sticker/bratvid',
     'qrcode' => '/tools/qrcode',
     'removebg' => '/tools/removebg',
     'ssweb' => '/tools/ssweb',
     'upscale' => '/tools/upscale'
 ];
 
-function out($data, $code = 200) {
+function raan_json($data, int $code = 200): void
+{
     http_response_code($code);
-    echo is_string($data)
-        ? $data
-        : json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    echo json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     exit;
 }
 
 if ($tool === '') {
-    out([
-        'status' => false,
-        'message' => 'Tool kosong.',
-        'available_tools' => array_keys($routes)
-    ], 400);
+    raan_json([
+        'status' => true,
+        'name' => 'RaaanTools API',
+        'message' => 'API gateway is running.',
+        'usage' => 'Use the RaaanTools interface to access tools.'
+    ]);
 }
 
 if (!isset($routes[$tool])) {
-    out([
+    raan_json([
         'status' => false,
-        'message' => 'Tool tidak tersedia.',
-        'tool' => $tool,
-        'available_tools' => array_keys($routes)
+        'message' => 'Tool tidak tersedia.'
     ], 404);
 }
 
@@ -76,11 +73,14 @@ foreach ($_POST as $key => $value) {
     }
 }
 
-$target = $apiBase . $routes[$tool];
-
-if (!empty($params)) {
-    $target .= '?' . http_build_query($params);
+if (empty($params)) {
+    raan_json([
+        'status' => false,
+        'message' => 'Parameter request kosong.'
+    ], 400);
 }
+
+$target = $apiBase . $routes[$tool] . '?' . http_build_query($params);
 
 $ch = curl_init($target);
 
@@ -98,17 +98,29 @@ curl_setopt_array($ch, [
 $response = curl_exec($ch);
 $error = curl_error($ch);
 $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
 curl_close($ch);
 
 if ($response === false || $response === '') {
-    out([
+    raan_json([
         'status' => false,
-        'message' => 'API proxy gagal.',
-        'tool' => $tool,
-        'error' => $error,
-        'target_hidden' => true
+        'message' => 'Gateway gagal menghubungi layanan.',
+        'tool' => $tool
     ], 502);
 }
 
-http_response_code($code ?: 200);
+if ($code >= 400) {
+    raan_json([
+        'status' => false,
+        'message' => 'Layanan sedang tidak tersedia atau parameter tidak valid.',
+        'tool' => $tool,
+        'code' => $code
+    ], 200);
+}
+
+if ($contentType) {
+    header('Content-Type: ' . $contentType);
+}
+
+http_response_code(200);
 echo $response;

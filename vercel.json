@@ -6,9 +6,6 @@
     },
     "api/index.php": {
       "runtime": "vercel-php@0.7.4"
-    },
-    "api/token.php": {
-      "runtime": "vercel-php@0.7.4"
     }
   },
   "routes": [
@@ -25,8 +22,12 @@
       "dest": "/script/$1"
     },
     {
+      "src": "/api/?",
+      "dest": "/api/index.php"
+    },
+    {
       "src": "/api/(.*)",
-      "dest": "/api/$1"
+      "dest": "/api/index.php"
     },
     {
       "src": "/(.*)",
@@ -34,6 +35,7 @@
     }
   ],
   "env": {
-    "RAAAN_API_BASE": "https://api.pixxxry.eu.cc"
+    "RAAAN_API_BASE": "https://api.pixxxry.eu.cc",
+    "RAAAN_TIMEOUT_SECONDS": "25"
   }
 }

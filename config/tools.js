@@ -1,8 +1,8 @@
 const RAAAN_CONFIG = {
-  "apiDirectBase": "https://api.pixxxry.eu.cc",
+  "apiDirectBase": "",
   "publicBaseLabel": "Raaan Tools",
   "useProxy": true,
-  "proxyBase": "api.php",
+  "proxyBase": "/api",
   "network": {
     "mode": "proxy-first",
     "timeoutMs": 14000,
@@ -10,7 +10,7 @@ const RAAAN_CONFIG = {
     "statusCacheMs": 45000,
     "maxConcurrent": 3,
     "retry": 1,
-    "fallbackDirect": true
+    "fallbackDirect": false
   },
   "menus": [
     {
