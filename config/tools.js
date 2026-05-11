@@ -153,7 +153,7 @@ const RAAAN_CONFIG = {
       "key": "removebg",
       "label": "RemoveBG",
       "icon": "fa-scissors",
-      "desc": "Hapus background gambar",
+      "desc": "Hapus background gambar via upload atau URL",
       "category": "Tools",
       "file": "menu/tools/removebg/"
     },
@@ -167,9 +167,9 @@ const RAAAN_CONFIG = {
     },
     {
       "key": "upscale",
-      "label": "Upscale",
+      "label": "Upscale HD",
       "icon": "fa-up-right-and-down-left-from-center",
-      "desc": "Tingkatkan kualitas gambar",
+      "desc": "Perjelas gambar menjadi HD / upscale kualitas gambar",
       "category": "Tools",
       "file": "menu/tools/upscale/"
     }
@@ -782,11 +782,11 @@ const RAAAN_CONFIG = {
       "category": "Tools",
       "endpoint": "/tools/removebg",
       "param": "url",
-      "placeholder": "Tempel URL gambar untuk hapus background...",
+      "placeholder": "Upload gambar atau tempel URL gambar...",
       "button": "EKSEKUSI",
       "kind": "image-blob",
       "sample": "https://files.catbox.moe/ozfwom.jpg",
-      "desc": "Hapus background gambar",
+      "desc": "Hapus background gambar via upload atau URL",
       "defaults": {},
       "file": "menu/tools/removebg/",
       "tutorials": [
@@ -847,19 +847,19 @@ const RAAAN_CONFIG = {
     },
     "upscale": {
       "key": "upscale",
-      "label": "Upscale",
-      "short": "UPSCALE",
+      "label": "Upscale HD",
+      "short": "HD IMAGE",
       "icon": "fa-up-right-and-down-left-from-center",
       "brandIcon": "fa-solid fa-up-right-and-down-left-from-center",
       "accent": "#2fbc63",
       "category": "Tools",
       "endpoint": "/tools/upscale",
       "param": "url",
-      "placeholder": "Tempel URL gambar untuk upscale...",
+      "placeholder": "Upload gambar atau tempel URL gambar untuk diperjelas HD...",
       "button": "EKSEKUSI",
       "kind": "image-blob",
       "sample": "https://files.catbox.moe/ozfwom.jpg",
-      "desc": "Tingkatkan kualitas gambar",
+      "desc": "Perjelas gambar menjadi HD / upscale kualitas gambar",
       "defaults": {
         "scale": "2"
       },
