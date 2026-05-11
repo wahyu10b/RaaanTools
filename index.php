@@ -40,16 +40,7 @@ foreach ($rii as $file) {
                 <div class="header-controls"><button class="dark-toggle" id="darkToggle" title="Mode Gelap/Terang"><i class="fa-solid fa-moon"></i></button></div>
             </header>
             <main class="content-grid">
-                <section class="panel reveal visible">
-                    <div class="section-title"><i class="fa-solid fa-toolbox"></i> Pilih Tools</div>
-                    <p style="margin-top:8px;font-size:.82rem;font-weight:800;color:var(--ink-soft);line-height:1.45;">Pilih tool yang mau dipakai. Semua halaman tool sudah berubah ke <b>PHP V7</b>, API pakai token, SW ada di folder script, dan struktur siap GitHub/Vercel.</p>
-                    <div class="grid grid-cols-2 gap-2 mt-4 text-xs font-black uppercase">
-                        <div class="rounded-xl border-2 border-black bg-white/80 p-3 shadow-[3px_3px_0_#111]">File<br><span class="text-lg"><?= number_format($totalFiles) ?></span></div>
-                        <div class="rounded-xl border-2 border-black bg-white/80 p-3 shadow-[3px_3px_0_#111]">PHP<br><span class="text-lg"><?= number_format($phpFiles) ?></span></div>
-                        <div class="rounded-xl border-2 border-black bg-white/80 p-3 shadow-[3px_3px_0_#111]">JS<br><span class="text-lg"><?= number_format($jsFiles) ?></span></div>
-                        <div class="rounded-xl border-2 border-black bg-white/80 p-3 shadow-[3px_3px_0_#111]">CSS<br><span class="text-lg"><?= number_format($cssFiles) ?></span></div>
-                    </div>
-                </section>
+               
                 <section class="panel reveal visible"><div class="section-title"><i class="fa-solid fa-layer-group"></i> Generator</div><div class="home-grid"><a class="home-card" href="menu/generator/brat/">
             <div class="tool-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
             <div class="tool-info"><strong>BRAT Generator</strong><span>Buat gambar gaya Brat dari teks</span></div>
