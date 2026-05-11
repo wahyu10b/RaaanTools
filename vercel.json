@@ -1,17 +1,37 @@
 {
   "version": 2,
   "functions": {
-    "api.php": { "runtime": "vercel-php@0.7.4" },
-    "index.php": { "runtime": "vercel-php@0.7.4" },
-    "handle/404.php": { "runtime": "vercel-php@0.7.4" }
+    "api/app.php": {
+      "runtime": "vercel-php@0.7.4"
+    },
+    "api/index.php": {
+      "runtime": "vercel-php@0.7.4"
+    },
+    "api/token.php": {
+      "runtime": "vercel-php@0.7.4"
+    }
   },
   "routes": [
-    { "src": "/api/?", "dest": "/api.php" },
-    { "src": "/api.php", "dest": "/api.php" },
-    { "src": "/$", "dest": "/index.php" },
-    { "src": "/(.*)", "dest": "/$1" },
-    { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/handle/404.php", "status": 404 }
+    {
+      "src": "/asset/(.*)",
+      "dest": "/asset/$1"
+    },
+    {
+      "src": "/css/(.*)",
+      "dest": "/css/$1"
+    },
+    {
+      "src": "/script/(.*)",
+      "dest": "/script/$1"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/app.php"
+    }
   ],
   "env": {
     "RAAAN_API_BASE": "https://api.pixxxry.eu.cc"
